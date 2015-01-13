@@ -110,7 +110,7 @@ class CoffinEnvironment(Environment):
             libs.append(get_library(libname))
 
         for libname in getattr(settings, 'JINJA2_DJANGO_TEMPLATETAG_LIBRARY_MODULES', ()):
-            libs.append(import_library)
+            libs.append(import_library(libname))
 
         return libs
 
