@@ -1,7 +1,5 @@
 from django.template import (
     Context as DjangoContext,
-    add_to_builtins as django_add_to_builtins,
-    import_library,
 )
 from jinja2 import Template as _Jinja2Template
 
@@ -80,32 +78,6 @@ def dict_from_django_context(context):
 builtins = []
 
 
-def add_to_builtins(module_name):
-    """Add the given module to both Coffin's list of default template
-    libraries as well as Django's. This makes sense, since Coffin
-    libs are compatible with Django libraries.
-
-    You can still use Django's own ``add_to_builtins`` to register
-    directly with Django and bypass Coffin.
-
-    Once thing that is special about Coffin is that because {% load %}
-    is not supported in Coffin, *everything* it provides must be
-    registered through the builtins.
-
-    TODO: Allow passing path to (or reference of) extensions and
-    filters directly. This would make it easier to use this function
-    with 3rd party Jinja extensions that do not know about Coffin and
-    thus will not provide a Library object.
-
-    XXX/TODO: Why do we need our own custom list of builtins? Our
-    Library object is compatible, remember!? We can just add them
-    directly to Django's own list of builtins.
-    """
-    builtins.append(import_library(module_name))
-    django_add_to_builtins(module_name)
 
 
-add_to_builtins('coffin.template.defaulttags')
-add_to_builtins('coffin.template.defaultfilters')
-add_to_builtins('coffin.templatetags.static')
 
